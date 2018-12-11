@@ -143,7 +143,7 @@ const styles = (theme: Theme) =>
       display: 'flex',
       justifyContent: 'flex-end',
       alignItems: 'flex-end',
-      flexDirection: theme.direction === 'rtl' ? 'row' : 'row-reverse',
+      flexDirection: theme.direction === 'rtl' ? 'row-reverse' : 'row',
     },
     dateHeader: {
       height: 60,
@@ -156,4 +156,6 @@ const styles = (theme: Theme) =>
     },
   });
 
-export default withStyles(styles)(withUtils()(DateTimePickerHeader));
+export default withStyles(styles, {
+  name: 'MuiPickersDTHeader'
+})(withUtils()(DateTimePickerHeader));
