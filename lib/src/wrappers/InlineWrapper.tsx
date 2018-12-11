@@ -1,8 +1,6 @@
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
-import Popover, {
-  PopoverProps as PopoverPropsType,
-} from '@material-ui/core/Popover';
+import Popover, { PopoverProps as PopoverPropsType } from '@material-ui/core/Popover';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import classnames from 'classnames';
 import keycode from 'keycode';
@@ -160,9 +158,7 @@ export class InlineWrapper extends React.PureComponent<
 
     return (
       <React.Fragment>
-        {isOpen && (
-          <EventListener target="window" onKeyDown={this.handleKeyDown} />
-        )}
+        {isOpen && <EventListener target="window" onKeyDown={this.handleKeyDown} />}
 
         <DateTextField
           value={value}
@@ -195,10 +191,7 @@ export class InlineWrapper extends React.PureComponent<
 
             <DialogActions
               classes={{
-                root:
-                  clearable || showTodayButton
-                    ? classes.dialogActions
-                    : undefined,
+                root: clearable || showTodayButton ? classes.dialogActions : undefined,
                 action: classnames(classes.dialogAction, {
                   [classes.clearableDialogAction]: clearable,
                   [classes.todayDialogAction]: !clearable && showTodayButton,
@@ -225,7 +218,7 @@ export class InlineWrapper extends React.PureComponent<
   }
 }
 
-const styles = {
+export const styles = {
   popoverPaper: {
     maxWidth: 310,
     minWidth: 290,
