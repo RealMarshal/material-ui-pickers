@@ -6,6 +6,8 @@
 [![Build Status](https://api.travis-ci.org/dmtrKovalenko/material-ui-pickers.svg?branch=master)](https://travis-ci.org/dmtrKovalenko/material-ui-pickers)
 > Accessible, customizable, delightful date & time pickers for @material-ui/core
 
+#### This fork adds support of today & clear buttons to inline pickers
+
 ### Installation
 Available as npm package.
 ```sh
