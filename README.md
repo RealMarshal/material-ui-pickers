@@ -1,15 +1,22 @@
 # Material-UI pickers
+
 [![npm package](https://img.shields.io/npm/v/material-ui-pickers.svg)](https://www.npmjs.org/package/material-ui-pickers)
 [![npm download](https://img.shields.io/npm/dm/material-ui-pickers.svg)](https://www.npmjs.org/package/material-ui-pickers)
 [![codecov](https://codecov.io/gh/dmtrKovalenko/material-ui-pickers/branch/develop/graph/badge.svg)](https://codecov.io/gh/dmtrKovalenko/material-ui-pickers)
 [![Bundle Size](https://img.shields.io/badge/gzip-14.7%20KB-brightgreen.svg)](https://unpkg.com/material-ui-pickers@1.0.0-rc.10/dist/material-ui-pickers.cjs.js)
 [![Build Status](https://api.travis-ci.org/dmtrKovalenko/material-ui-pickers.svg?branch=master)](https://travis-ci.org/dmtrKovalenko/material-ui-pickers)
+
 > Accessible, customizable, delightful date & time pickers for @material-ui/core
 
-#### This fork adds support of today & clear buttons to inline pickers
+### Changes from the original
+
+- Supports today & clear buttons for inline pickers
+- Allows showing today & clear buttons simultaneously
 
 ### Installation
+
 Available as npm package.
+
 ```sh
 npm i material-ui-pickers
 ```
@@ -50,13 +57,17 @@ And the last step of installation would be an icon font. By default, we are rely
 ```
 
 ## Documentation
+
 Check out the [documentation website](https://material-ui-pickers.firebaseapp.com/)
 
 ### Recently updated?
+
 Changelog available [here](https://github.com/dmtrKovalenko/material-ui-pickers/releases)
 
 ### Contributing
+
 For information about how to contribute, see the [CONTRIBUTING](https://github.com/dmtrKovalenko/material-ui-pickers/blob/master/CONTRIBUTING.md) file.
 
 ### LICENSE
+
 The project is licensed under the terms of [MIT license](https://github.com/dmtrKovalenko/material-ui-pickers/blob/master/LICENSE)
