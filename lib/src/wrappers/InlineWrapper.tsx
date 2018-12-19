@@ -194,22 +194,21 @@ export class InlineWrapper extends React.PureComponent<
                 root: clearable || showTodayButton ? classes.dialogActions : undefined,
                 action: classnames(classes.dialogAction, {
                   [classes.clearableDialogAction]: clearable,
-                  [classes.todayDialogAction]: !clearable && showTodayButton,
+                  [classes.todayDialogAction]: showTodayButton,
                 }),
               }}
             >
+              {showTodayButton && (
+                <Button color="primary" onClick={this.handleSetTodayDate}>
+                  {todayLabel}
+                </Button>
+              )}
+
               {clearable && (
                 <Button color="primary" onClick={this.handleClear}>
                   {clearLabel}
                 </Button>
               )}
-
-              {!clearable &&
-                showTodayButton && (
-                  <Button color="primary" onClick={this.handleSetTodayDate}>
-                    {todayLabel}
-                  </Button>
-                )}
             </DialogActions>
           </React.Fragment>
         </Popover>
@@ -231,16 +230,8 @@ export const styles = {
   dialogAction: {
     // empty but may be needed for override
   },
-  clearableDialogAction: {
-    '&:first-child': {
-      marginRight: 'auto',
-    },
-  },
-  todayDialogAction: {
-    '&:first-child': {
-      marginRight: 'auto',
-    },
-  },
+  clearableDialogAction: {},
+  todayDialogAction: {},
 };
 
 // @ts-ignore

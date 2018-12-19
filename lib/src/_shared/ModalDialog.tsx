@@ -66,22 +66,21 @@ export const ModalDialog: React.SFC<ModalDialogProps & WithStyles<typeof styles>
         root: clearable || showTodayButton ? classes.dialogActions : undefined,
         action: classnames(classes.dialogAction, {
           [classes.clearableDialogAction]: clearable,
-          [classes.todayDialogAction]: !clearable && showTodayButton,
+          [classes.todayDialogAction]: showTodayButton,
         }),
       }}
     >
+      {showTodayButton && (
+        <Button color="primary" onClick={onSetToday}>
+          {todayLabel}
+        </Button>
+      )}
+
       {clearable && (
         <Button color="primary" onClick={onClear}>
           {clearLabel}
         </Button>
       )}
-
-      {!clearable &&
-        showTodayButton && (
-          <Button color="primary" onClick={onSetToday}>
-            {todayLabel}
-          </Button>
-        )}
 
       <Button color="primary" onClick={onDismiss}>
         {cancelLabel}
@@ -137,16 +136,8 @@ export const styles = createStyles({
     // see https://github.com/dmtrKovalenko/material-ui-pickers/pull/267
     justifyContent: 'flex-start',
   },
-  clearableDialogAction: {
-    '&:first-child': {
-      marginRight: 'auto',
-    },
-  },
-  todayDialogAction: {
-    '&:first-child': {
-      marginRight: 'auto',
-    },
-  },
+  clearableDialogAction: {},
+  todayDialogAction: {},
   dialogAction: {
     // empty but may be needed for override
   },
