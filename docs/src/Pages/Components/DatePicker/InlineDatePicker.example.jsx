@@ -35,6 +35,8 @@ export default class InlineDatePickerDemo extends PureComponent {
 
         <div className="picker">
           <InlineDatePicker
+            showTodayButton
+            clearable
             keyboard
             variant="outlined"
             label="With keyboard"
