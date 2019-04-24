@@ -1,3 +1,19 @@
+import { DatePickerInlineProps, DatePickerProps } from './DatePicker';
+import { DateTimePickerInlineProps, DateTimePickerProps } from './DateTimePicker';
+import { TimePickerInlineProps, TimePickerProps } from './TimePicker';
+
+export type TimePickerProps = TimePickerProps;
+
+export type TimePickerInlineProps = TimePickerInlineProps;
+
+export type DatePickerProps = DatePickerProps;
+
+export type DatePickerInlineProps = DatePickerInlineProps;
+
+export type DateTimePickerProps = DateTimePickerProps;
+
+export type DateTimePickerInlineProps = DateTimePickerInlineProps;
+
 export { default as DatePicker, InlineDatePicker } from './DatePicker';
 
 export { default as TimePicker, InlineTimePicker } from './TimePicker';
@@ -14,4 +30,7 @@ export { default as TimePickerView } from './TimePicker/components/TimePickerVie
 
 export { default as Clock } from './TimePicker/components/Clock';
 
-export { default as MuiPickersUtilsProvider } from './MuiPickersUtilsProvider';
+export {
+  default as MuiPickersUtilsProvider,
+  MuiPickersContextConsumer,
+} from './MuiPickersUtilsProvider';

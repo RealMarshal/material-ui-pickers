@@ -12,17 +12,23 @@ import View from './components/DateTimePickerView';
 import { Omit } from '@material-ui/core';
 import { withUtils, WithUtilsProps } from '../_shared/WithUtils';
 import DateTimePickerView, { DateTimePickerViewType } from '../constants/DateTimePickerView';
-import DomainPropTypes from '../constants/prop-types';
 import { BaseDatePickerProps } from '../DatePicker/DatePicker';
 import { MaterialUiPickersDate } from '../typings/date';
 
 export interface BaseDateTimePickerProps extends Omit<BaseDatePickerProps, 'openToYearSelection'> {
+  /** Auto move between date, hours and minutes */
   autoSubmit?: boolean;
+  /** Show or hide tabs switching between date and time */
   showTabs?: boolean;
+  /** Control 12h or 24h view mode for clock */
   ampm?: boolean;
-  openTo?: DateTimePickerViewType;
+  /** Initial view to show when datetime picker is open */
+  openTo?: 'year' | 'date' | 'hours' | 'minutes';
+  /** Date tab icon */
   dateRangeIcon?: React.ReactNode;
+  /** Time tab icon */
   timeIcon?: React.ReactNode;
+  /** Container component for date time picker views */
   ViewContainerComponent?: string | React.ComponentType<any>;
 }
 
@@ -38,28 +44,9 @@ interface DateTimePickerState {
 
 export class DateTimePicker extends React.Component<DateTimePickerProps, DateTimePickerState> {
   public static propTypes: any = {
-    allowKeyboardControl: PropTypes.bool,
-    ampm: PropTypes.bool,
-    animateYearScrolling: PropTypes.bool,
     autoSubmit: PropTypes.bool,
-    date: PropTypes.object.isRequired,
-    initialFocusedDate: PropTypes.any,
-    innerRef: PropTypes.any,
-    dateRangeIcon: PropTypes.node,
-    disableFuture: PropTypes.bool,
-    disablePast: PropTypes.bool,
-    leftArrowIcon: PropTypes.node,
-    maxDate: DomainPropTypes.date.isRequired,
-    minDate: DomainPropTypes.date.isRequired,
-    onChange: PropTypes.func.isRequired,
-    openTo: PropTypes.oneOf(Object.keys(DateTimePickerView).map(key => DateTimePickerView[key]))
-      .isRequired,
-    renderDay: PropTypes.func,
-    rightArrowIcon: PropTypes.node,
-    shouldDisableDate: PropTypes.func,
+    openTo: PropTypes.oneOf(Object.keys(DateTimePickerView).map(key => DateTimePickerView[key])),
     showTabs: PropTypes.bool,
-    timeIcon: PropTypes.node,
-    utils: PropTypes.object.isRequired,
     ViewContainerComponent: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.func,
@@ -68,19 +55,10 @@ export class DateTimePicker extends React.Component<DateTimePickerProps, DateTim
   };
 
   public static defaultProps = {
-    allowKeyboardControl: false,
-    ampm: true,
-    animateYearScrolling: false,
     autoSubmit: true,
-    dateRangeIcon: undefined,
-    disableFuture: false,
-    disablePast: false,
-    leftArrowIcon: undefined,
-    renderDay: undefined,
-    rightArrowIcon: undefined,
-    shouldDisableDate: undefined,
     showTabs: true,
-    timeIcon: undefined,
+    ampm: true,
+    openTo: 'date' as DateTimePickerView,
     ViewContainerComponent: 'div',
   };
 
@@ -121,7 +99,7 @@ export class DateTimePicker extends React.Component<DateTimePickerProps, DateTim
   };
 
   public handleYearChange = (date: MaterialUiPickersDate) => {
-    this.onChange(date, false, DateTimePickerView.DATE);
+    this.onChange(date, true, DateTimePickerView.DATE);
   };
 
   public handleDayChange = (date: MaterialUiPickersDate, isFinish?: boolean) => {

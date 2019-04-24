@@ -1,28 +1,31 @@
+import { Omit } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import Popover, { PopoverProps as PopoverPropsType } from '@material-ui/core/Popover';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import classnames from 'classnames';
-import keycode from 'keycode';
+import clsx from 'clsx';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import EventListener from 'react-event-listener';
 import DateTextField, { DateTextFieldProps } from '../_shared/DateTextField';
-import DomainPropTypes from '../constants/prop-types';
 
-export interface OuterInlineWrapperProps extends Partial<DateTextFieldProps> {
+export interface OuterInlineWrapperProps extends Omit<DateTextFieldProps, 'utils' | 'onClick'> {
+  /** On open callback */
   onOpen?: () => void;
+  /** On close callback */
   onClose?: () => void;
   onSetToday?: () => void;
   showTodayButton?: boolean;
   clearLabel?: React.ReactNode;
   todayLabel?: React.ReactNode;
+  /** Dialog props passed to material-ui Dialog */
   PopoverProps?: Partial<PopoverPropsType>;
 }
 
 export interface InlineWrapperProps extends OuterInlineWrapperProps {
   handleAccept: () => void;
   isAccepted: boolean;
+  /** Show only calendar for datepicker in popover mode */
   onlyCalendar: boolean;
 }
 
@@ -30,17 +33,9 @@ export class InlineWrapper extends React.PureComponent<
   InlineWrapperProps & WithStyles<typeof styles>
 > {
   public static propTypes: any = {
-    /** Show only calendar for datepicker in popover mode */
     onlyCalendar: PropTypes.bool,
-    /** Picker value */
-    value: DomainPropTypes.date,
-    /** On open callback [(e: Event) => void] */
     onOpen: PropTypes.func,
-    /** On close callback [(e: Event) => void] */
     onClose: PropTypes.func,
-    /** Format string */
-    format: PropTypes.string,
-    /** Dialog props passed to material-ui Dialog */
     PopoverProps: PropTypes.object,
     labelFunc: PropTypes.func,
     onClear: PropTypes.func,
@@ -59,13 +54,7 @@ export class InlineWrapper extends React.PureComponent<
 
   public static defaultProps = {
     value: new Date(),
-    labelFunc: undefined,
     onlyCalendar: false,
-    format: undefined,
-    onClear: undefined,
-    onOpen: undefined,
-    onClose: undefined,
-    PopoverProps: undefined,
     isAccepted: false,
     keyboard: undefined,
     showTodayButton: false,
@@ -77,6 +66,10 @@ export class InlineWrapper extends React.PureComponent<
   public static getDerivedStateFromProps(nextProps: InlineWrapperProps) {
     // only if accept = true close the popover
     if (nextProps.isAccepted) {
+      if (nextProps.onClose) {
+        nextProps.onClose();
+      }
+
       return {
         anchorEl: null,
       };
@@ -98,21 +91,25 @@ export class InlineWrapper extends React.PureComponent<
 
   public close = () => {
     this.setState({ anchorEl: null });
-    this.props.handleAccept();
+
+    if (this.props.value !== null) {
+      this.props.handleAccept();
+    }
+
     if (this.props.onClose) {
       this.props.onClose();
     }
   };
 
-  public handleKeyDown = (event: Event) => {
-    switch (keycode(event)) {
-      case 'enter': {
+  public handleKeyDown = (event: KeyboardEvent) => {
+    switch (event.key) {
+      case 'Enter': {
         this.props.handleAccept();
         this.close();
         break;
       }
       default:
-        // if keycode is not handled, stop execution
+        // if key is not handled, stop execution
         return;
     }
 
@@ -192,7 +189,7 @@ export class InlineWrapper extends React.PureComponent<
             <DialogActions
               classes={{
                 root: clearable || showTodayButton ? classes.dialogActions : undefined,
-                action: classnames(classes.dialogAction, {
+                action: clsx(classes.dialogAction, {
                   [classes.clearableDialogAction]: clearable,
                   [classes.todayDialogAction]: showTodayButton,
                 }),
@@ -234,5 +231,4 @@ export const styles = {
   todayDialogAction: {},
 };
 
-// @ts-ignore
 export default withStyles(styles)(InlineWrapper);

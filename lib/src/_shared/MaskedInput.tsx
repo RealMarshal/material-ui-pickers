@@ -3,7 +3,7 @@ import * as React from 'react';
 import MaskedInput, { MaskedInputProps } from 'react-text-mask';
 
 export interface CustomMaskedInputProps extends MaskedInputProps {
-  mask?: any;
+  mask?: MaskedInputProps['mask'];
   inputRef: React.Ref<any>;
 }
 
@@ -13,14 +13,20 @@ export default class Input extends React.PureComponent<CustomMaskedInputProps> {
     inputRef: PropTypes.func.isRequired,
   };
 
-  public static defaultProps = {
-    mask: undefined,
+  public createInputRef = (ref: MaskedInput | null) => {
+    const { inputRef } = this.props;
+
+    if (inputRef && typeof inputRef === 'function') {
+      // @ts-ignore inputElement exists in Masked input. Issue in typings
+      inputRef(ref ? ref.inputElement : null);
+    }
   };
 
   public render() {
     const { inputRef, keepCharPositions, ...rest } = this.props;
+
     return this.props.mask ? (
-      <MaskedInput {...rest} keepCharPositions={keepCharPositions} ref={inputRef} />
+      <MaskedInput {...rest} ref={this.createInputRef} keepCharPositions={keepCharPositions} />
     ) : (
       <input {...rest} ref={inputRef} />
     );

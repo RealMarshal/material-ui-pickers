@@ -1,8 +1,10 @@
+import clsx from 'clsx';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
+
 import { Theme } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import * as PropTypes from 'prop-types';
-import * as React from 'react';
 import PickerToolbar from '../../_shared/PickerToolbar';
 import ToolbarButton from '../../_shared/ToolbarButton';
 import { withUtils, WithUtilsProps } from '../../_shared/WithUtils';
@@ -17,6 +19,9 @@ export const styles = (theme: Theme) =>
       paddingLeft: 16,
       paddingRight: 16,
       justifyContent: 'space-around',
+    },
+    toolBar24h: {
+      paddingLeft: 32,
     },
     separator: {
       margin: '0 4px 0 2px',
@@ -37,15 +42,18 @@ export const styles = (theme: Theme) =>
       display: 'flex',
       justifyContent: 'flex-end',
       alignItems: 'flex-end',
-      flexDirection: theme.direction === 'rtl' ? 'row' : 'row-reverse',
+      flexDirection: theme.direction === 'rtl' ? 'row-reverse' : 'row',
     },
     dateHeader: {
       height: 60,
+      minWidth: 110,
+      marginRight: 4,
     },
     timeHeader: {
       height: 65,
+      minWidth: 155,
       display: 'flex',
-      justifyContent: 'flex-end',
+      justifyContent: 'center',
       alignItems: 'flex-end',
     },
   });
@@ -71,7 +79,7 @@ export const DateTimePickerHeader: React.SFC<DateTimePickerHeaderProps> = ({
   ampm,
 }) => {
   return (
-    <PickerToolbar className={classes.toolbar}>
+    <PickerToolbar className={clsx(classes.toolbar, { [classes.toolBar24h]: !ampm })}>
       <div className={classes.dateHeader}>
         <ToolbarButton
           variant="subtitle1"
@@ -135,16 +143,9 @@ export const DateTimePickerHeader: React.SFC<DateTimePickerHeaderProps> = ({
   date: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   meridiemMode: PropTypes.string.isRequired,
-  openView: PropTypes.string.isRequired,
-  onOpenViewChange: PropTypes.func.isRequired,
-  setMeridiemMode: PropTypes.func.isRequired,
   utils: PropTypes.object.isRequired,
   ampm: PropTypes.bool,
   innerRef: PropTypes.any,
-};
-
-DateTimePickerHeader.defaultProps = {
-  ampm: true,
 };
 
 export default withStyles(styles, { name: 'MuiPickerDTHeader' })(withUtils()(DateTimePickerHeader));
